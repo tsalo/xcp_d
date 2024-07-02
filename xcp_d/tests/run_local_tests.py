@@ -31,6 +31,14 @@ def _get_parser():
         required=False,
         default=None,
     )
+    parser.add_argument(
+        "--pdb",
+        dest="pdb",
+        action="store_true",
+        help="Drop into pdb on test failure.",
+        required=False,
+        default=False,
+    )
     return parser
 
 
@@ -63,7 +71,7 @@ def run_command(command, env=None):
         )
 
 
-def run_tests(test_regex, test_mark):
+def run_tests(test_regex, test_mark, pdb=False):
     """Run the tests."""
     local_patch = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     mounted_code = "/usr/local/miniconda/lib/python3.10/site-packages/xcp_d"
@@ -77,6 +85,10 @@ def run_tests(test_regex, test_mark):
         f"--output_dir={mounted_code}/xcp_d/tests/pytests/out "
         f"--working_dir={mounted_code}/xcp_d/tests/pytests/work "
     )
+
+    if pdb:
+        run_str += "--pdb "
+
     if test_regex:
         run_str += f"-k {test_regex} "
     elif test_mark:
