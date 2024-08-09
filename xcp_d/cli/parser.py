@@ -505,6 +505,16 @@ The default is 240 (4 minutes).
         help="Selection of atlases to apply to the data. All are used by default.",
     )
     g_atlases.add_argument(
+        "--external-atlases",
+        "--external_atlases",
+        action=parser_utils.ToDict,
+        metavar="PACKAGE=PATH",
+        type=str,
+        nargs="+",
+        dest="atlases",
+        help="Search PATH(s) for atlas-type BIDS datasets to apply to the data.",
+    )
+    g_atlases.add_argument(
         "--skip-parcellation",
         "--skip_parcellation",
         action="store_const",
