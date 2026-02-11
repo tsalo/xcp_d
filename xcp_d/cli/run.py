@@ -912,6 +912,11 @@ def build_workflow(opts, retval):
 
     opts, retval["return_code"] = _validate_parameters(opts, build_log)
 
+    retval["workflow"] = None
+    retval["fmri_dir"] = str(opts.fmri_dir)
+    retval["output_dir"] = str(opts.output_dir)
+    retval["work_dir"] = str(opts.work_dir)
+
     if retval["return_code"] == 1:
         return retval
 
@@ -925,10 +930,6 @@ def build_workflow(opts, retval):
             )
 
     retval["return_code"] = 1
-    retval["workflow"] = None
-    retval["fmri_dir"] = str(opts.fmri_dir)
-    retval["output_dir"] = str(opts.output_dir)
-    retval["work_dir"] = str(opts.work_dir)
 
     # First check that fmriprep_dir looks like a BIDS folder
     if opts.input_type in ("dcan", "hcp", "ukb"):
