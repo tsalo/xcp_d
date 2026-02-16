@@ -204,10 +204,8 @@ def compute_alff(data_matrix, mean_matrix, low_pass, high_pass, TR, sample_mask=
         alff[i_voxel] *= sd_scale
 
         falff[i_voxel] = np.sum(power_spectrum_neural) / np.sum(power_spectrum_sqrt)
-        peraf[i_voxel] = (
-            np.mean(np.abs((voxel_data_unscaled - mean_matrix[i_voxel]) / mean_matrix[i_voxel]))
-            * 100
-        )
+        # voxel_data_unscaled is already mean-centered, so we don't need to subtract the mean
+        peraf[i_voxel] = np.mean(np.abs(voxel_data_unscaled / mean_matrix[i_voxel])) * 100
 
         tsnr[i_voxel] = mean_matrix[i_voxel] / np.std(voxel_data_unscaled)
 
